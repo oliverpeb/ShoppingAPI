@@ -20,7 +20,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<ShoppingItemsRepository>(new ShoppingItemsRepository());
+builder.Services.AddSingleton<ShoppingItemsRepository>();
 
 var app = builder.Build();
 

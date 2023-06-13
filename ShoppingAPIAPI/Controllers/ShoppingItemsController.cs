@@ -6,7 +6,7 @@ namespace ShoppingAPIAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    
+
     public class ShoppingItemsController : ControllerBase
     {
         private readonly ShoppingItemsRepository _repository;
@@ -29,10 +29,8 @@ namespace ShoppingAPIAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
-        public ActionResult<shoppingitem> Add(shoppingitem newshoppingitem)
+        public ActionResult<shoppingitem> Post(shoppingitem newshoppingitem)
         {
-
-
             shoppingitem createdshoppingitem = _repository.Add(newshoppingitem);
             return Created($"/shoppingitems/" + createdshoppingitem.Id, createdshoppingitem);
 
@@ -75,6 +73,38 @@ namespace ShoppingAPIAPI.Controllers
         {
             return _repository.TotalPrice();
         }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpPut("{id}")]
+        public ActionResult<shoppingitem?> Put(int id, [FromBody] shoppingitem updates)
+        {
+            try
+            {
+                shoppingitem? updatedshoppingitem = _repository.Update(id, updates);
+                if(updatedshoppingitem == null)
+                {
+                    return NotFound();
+                }
+                return Ok(updatedshoppingitem);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+
+        }
+
 
     }
 }

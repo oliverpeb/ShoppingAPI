@@ -25,5 +25,10 @@
             return $"Id: {Id}, Name: {Name}, Price: {Price}, Quantity: {Quantity}";
         }
 
+        public void Validate()
+        {
+
+        }
+
     }
 }

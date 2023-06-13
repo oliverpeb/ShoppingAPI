@@ -62,5 +62,20 @@ namespace ShoppingAPIAPI.Repositories
 
 
         }
+
+        public shoppingitem? Update(int id, shoppingitem updates)
+        {
+            updates.Validate();
+            shoppingitem foundShoppingItem = GetById(id);
+            if (foundShoppingItem == null)
+            {
+                return null;
+            }
+            foundShoppingItem.Name = updates.Name;
+            foundShoppingItem.Price = updates.Price;
+            foundShoppingItem.Quantity = updates.Quantity;
+            return foundShoppingItem;
+        }
     }
+    
 }
